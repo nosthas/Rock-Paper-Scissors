@@ -57,7 +57,8 @@ const setPlayerMoves = function(player, moveOneType, moveOneValue, moveTwoType, 
 
 // getRoundWinner function
 const getRoundWinner = function(round) {
-  if (round === 1){
+
+  if (round && round === 1){
       if(playerOneMoveOneType === playerTwoMoveOneType){
         if(playerOneMoveOneValue > playerTwoMoveOneValue){
           return 'Player One';
@@ -77,7 +78,7 @@ const getRoundWinner = function(round) {
           return 'Player Two';
         }
       }
-  } else if (round === 2) {
+  } else if (round && round === 2) {
     if(playerOneMoveTwoType === playerTwoMoveTwoType){
       if(playerOneMoveTwoValue > playerTwoMoveTwoValue){
         return 'Player One';
@@ -97,7 +98,7 @@ const getRoundWinner = function(round) {
         return 'Player Two';
       }
     }
-  } else if (round === 3) {
+  } else if (round && round === 3) {
     if(playerOneMoveThreeType === playerTwoMoveThreeType){
       if(playerOneMoveThreeValue > playerTwoMoveThreeValue){
         return 'Player One';
@@ -118,6 +119,34 @@ const getRoundWinner = function(round) {
       }
     }
   } else {
-    return false;
+    return null;
+  }
+}
+
+// getGameWinner Function
+const getGameWinner = function(){
+
+  let p1 = 0;
+  let p2 = 0;
+
+  for (let i = 0; i < 3; i++) {
+    if(getRoundWinner(i) === 'Player One'){
+      p1++;
+    } else if (getRoundWinner(i) === 'Player Two'){
+      p2++;
+    } else if (getRoundWinner(i) === 'Tie'){
+      p1++;
+      p2++;
+    } else {
+      //return null;
+    }
+  }
+
+  if (p1 > p2) {
+    return 'Player One';
+  } else if (p1 < p2){
+    return 'Player Two';
+  } else {
+    return 'Tie';
   }
 }
