@@ -21,19 +21,19 @@ const setPlayerMoves = function(player, moveOneType, moveOneValue, moveTwoType, 
 
   // Check if Value or Move is missing
   if (moveOneType === undefined || moveOneValue === undefined || moveTwoType === undefined || moveTwoValue === undefined || moveThreeType === undefined || moveThreeValue === undefined){
-    return false;
+    return;
   }
   // Check if Type is valid
   if ((moveOneType !== 'rock' && moveOneType !== 'paper' && moveOneType !== 'scissors') || (moveTwoType !== 'rock' && moveTwoType !== 'paper' && moveTwoType !== 'scissors') || (moveThreeType !== 'rock' && moveThreeType !== 'paper' && moveThreeType !== 'scissors')) {
-    return false;
+    return;
   }
   // Check if Move is Greater than One
   if (moveOneValue < 1 || moveTwoValue < 1 || moveThreeValue < 1){
-    return false;
+    return;
   }
   // Check if Move Sum is less than 99
   if (moveOneValue + moveTwoValue + moveThreeValue > 99){
-    return false;
+    return;
   }
   // Check for Player Type
   if (player === 'Player One') {
@@ -53,10 +53,16 @@ const setPlayerMoves = function(player, moveOneType, moveOneValue, moveTwoType, 
   } else {
     return false;
   }
-}
+};
 
 // getRoundWinner function
 const getRoundWinner = function(round) {
+
+
+  // if (!playerOneMoveType || !playerOneMoveValue || !playerTwoMoveType ||
+  //     !playerTwoMoveValue) {
+  //   return null;
+  // }
 
   if (round && round === 1){
       if(playerOneMoveOneType === playerTwoMoveOneType){
@@ -121,15 +127,27 @@ const getRoundWinner = function(round) {
   } else {
     return null;
   }
-}
+
+
+};
 
 // getGameWinner Function
 const getGameWinner = function(){
+
+  if (!playerOneMoveOneType || !playerOneMoveTwoType ||
+      !playerOneMoveThreeType || !playerOneMoveOneValue ||
+      !playerOneMoveTwoValue || !playerOneMoveThreeValue ||
+      !playerTwoMoveOneType || !playerTwoMoveTwoType ||
+      !playerTwoMoveThreeType || !playerTwoMoveOneValue ||
+      !playerTwoMoveTwoValue || !playerTwoMoveThreeValue) {
+    return null;
+  }
 
   let p1 = 0;
   let p2 = 0;
 
   for (let i = 0; i < 3; i++) {
+
     if(getRoundWinner(i) === 'Player One'){
       p1++;
     } else if (getRoundWinner(i) === 'Player Two'){
@@ -137,8 +155,6 @@ const getGameWinner = function(){
     } else if (getRoundWinner(i) === 'Tie'){
       p1++;
       p2++;
-    } else {
-      //return null;
     }
   }
 
@@ -150,3 +166,22 @@ const getGameWinner = function(){
     return 'Tie';
   }
 }
+
+const setComputerMoves = function(){
+
+  const moves = ['rock','paper','scissors']
+
+  playerTwoMoveOneType = moves[Math.floor(Math.random()*3)];
+  playerTwoMoveTwoType = moves[Math.floor(Math.random()*3)];
+  playerTwoMoveThreeType = moves[Math.floor(Math.random()*3)];
+
+  //console.log(playerTwoMoveOneType, playerTwoMoveTwoType, playerTwoMoveThreeType);
+
+  playerTwoMoveOneValue = Math.floor(Math.random() *  99);
+  playerTwoMoveTwoValue = Math.floor(Math.random() * (99 - playerTwoMoveOneValue));
+  playerTwoMoveThreeValue = 99 - (playerTwoMoveOneValue + playerTwoMoveTwoValue);
+
+  //console.log('Values: ' + playerTwoMoveOneValue + ', ' + playerTwoMoveTwoValue + ', '+ playerTwoMoveThreeValue);
+  //console.log('Equals: ' + (playerTwoMoveOneValue + playerTwoMoveTwoValue + playerTwoMoveThreeValue));
+
+};
